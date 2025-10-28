@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Navbar } from "@/components/navbar";
 import { useState } from "react";
 
@@ -111,19 +110,14 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
 
           <div className="container mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center space-y-6"
-            >
+            <div className="text-center space-y-6">
               <h1 className="font-bebas text-7xl md:text-8xl lg:text-9xl">
                 GET IN <span className="text-primary">TOUCH</span>
               </h1>
               <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
                 Ready to start your boxing journey? We&apos;re here to help. Reach out and let&apos;s get you started.
               </p>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -132,13 +126,7 @@ export default function ContactPage() {
           <div className="container mx-auto px-4">
             <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
               {/* Contact Form */}
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-8"
-              >
+              <div className="space-y-8">
                 <div>
                   <h2 className="font-bebas text-5xl mb-4">
                     SEND US A <span className="text-primary">MESSAGE</span>
@@ -211,23 +199,15 @@ export default function ContactPage() {
                   </div>
 
                   {submitStatus === "success" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-primary/20 border-2 border-primary text-foreground px-4 py-3"
-                    >
+                    <div className="bg-primary/20 border-2 border-primary text-foreground px-4 py-3">
                       Thank you! Your message has been sent successfully. We&apos;ll get back to you soon.
-                    </motion.div>
+                    </div>
                   )}
 
                   {submitStatus === "error" && (
-                    <motion.div
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className="bg-destructive/20 border-2 border-destructive text-foreground px-4 py-3"
-                    >
+                    <div className="bg-destructive/20 border-2 border-destructive text-foreground px-4 py-3">
                       Sorry, there was an error sending your message. Please try again or contact us directly.
-                    </motion.div>
+                    </div>
                   )}
 
                   <button
@@ -238,16 +218,10 @@ export default function ContactPage() {
                     {isSubmitting ? "SENDING..." : "SEND MESSAGE"}
                   </button>
                 </form>
-              </motion.div>
+              </div>
 
               {/* Contact Information */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6 }}
-                className="space-y-8"
-              >
+              <div className="space-y-8">
                 <div>
                   <h2 className="font-bebas text-5xl mb-4">
                     CONTACT <span className="text-primary">INFO</span>
@@ -300,7 +274,7 @@ export default function ContactPage() {
                     </div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </section>
@@ -308,13 +282,7 @@ export default function ContactPage() {
         {/* Map Section */}
         <section className="py-24 bg-zinc-900/50">
           <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-              className="text-center space-y-6 mb-12"
-            >
+            <div className="text-center space-y-6 mb-12">
               <h2 className="font-bebas text-6xl md:text-7xl">
                 VISIT <span className="text-primary">US</span>
               </h2>
@@ -322,15 +290,9 @@ export default function ContactPage() {
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
                 Drop by for a tour of our facility. First class is always free!
               </p>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-              className="max-w-5xl mx-auto"
-            >
+            <div className="max-w-5xl mx-auto">
               <div className="bg-card border-2 border-primary p-2 md:p-4">
                 <div className="aspect-video w-full">
                   <iframe
@@ -345,25 +307,19 @@ export default function ContactPage() {
                   />
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
         {/* FAQ Section */}
         <section className="py-24 bg-gradient-to-b from-background to-black">
           <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6 }}
-              className="text-center space-y-6 mb-16"
-            >
+            <div className="text-center space-y-6 mb-16">
               <h2 className="font-bebas text-6xl md:text-7xl">
                 FREQUENTLY ASKED <span className="text-primary">QUESTIONS</span>
               </h2>
               <div className="w-24 h-1 bg-primary mx-auto" />
-            </motion.div>
+            </div>
 
             <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
               {[
@@ -388,17 +344,13 @@ export default function ContactPage() {
                     "Yes! We have a dedicated parking lot with plenty of spaces for members. Street parking is also available nearby.",
                 },
               ].map((faq, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
                   className="bg-card border-2 border-border p-6 space-y-3"
                 >
                   <h3 className="font-bebas text-2xl text-primary">{faq.question}</h3>
                   <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "motion/react";
 import { Navbar } from "@/components/navbar";
 
 export default function Home() {
@@ -21,59 +20,33 @@ export default function Home() {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent" />
 
         <div className="container mx-auto px-4 relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center space-y-8"
-          >
-            <motion.h1
-              className="font-bebas text-8xl md:text-9xl lg:text-[12rem] leading-none"
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-            >
+          <div className="text-center space-y-8">
+            <h1 className="font-bebas text-8xl md:text-9xl lg:text-[12rem] leading-none">
               <span className="text-foreground">BELLS</span>
               <br />
               <span className="text-primary">BOXING</span>
-            </motion.h1>
+            </h1>
 
-            <motion.p
-              className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-            >
+            <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto">
               Train like a champion. Fight like a warrior. Transform your life.
-            </motion.p>
+            </p>
 
-            <motion.div
-              className="flex gap-4 justify-center flex-wrap"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-            >
+            <div className="flex gap-4 justify-center flex-wrap">
               <button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-4 text-lg font-bebas tracking-wider transition-all hover:scale-105">
                 START YOUR JOURNEY
               </button>
               <button className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-4 text-lg font-bebas tracking-wider transition-all hover:scale-105">
                 VIEW SCHEDULE
               </button>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* About Us Section */}
       <section className="py-24 bg-gradient-to-b from-background via-zinc-950 to-background">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center space-y-6"
-          >
+          <div className="max-w-4xl mx-auto text-center space-y-6">
             <h2 className="font-bebas text-6xl md:text-7xl text-foreground">
               ABOUT <span className="text-primary">US</span>
             </h2>
@@ -87,53 +60,29 @@ export default function Home() {
             </p>
 
             <div className="grid md:grid-cols-3 gap-8 pt-12">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: 0.1 }}
-                className="space-y-2"
-              >
+              <div className="space-y-2">
                 <div className="text-5xl font-bebas text-primary">10+</div>
                 <div className="text-muted-foreground">Years Experience</div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="space-y-2"
-              >
+              <div className="space-y-2">
                 <div className="text-5xl font-bebas text-primary">500+</div>
                 <div className="text-muted-foreground">Active Members</div>
-              </motion.div>
+              </div>
 
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: 0.3 }}
-                className="space-y-2"
-              >
+              <div className="space-y-2">
                 <div className="text-5xl font-bebas text-primary">15</div>
                 <div className="text-muted-foreground">Expert Coaches</div>
-              </motion.div>
+              </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Class Schedule Section */}
       <section id="schedule" className="py-24 bg-zinc-900/50">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="text-center space-y-6 mb-16"
-          >
+          <div className="text-center space-y-6 mb-16">
             <h2 className="font-bebas text-6xl md:text-7xl text-foreground">
               CLASS <span className="text-primary">SCHEDULE</span>
             </h2>
@@ -142,17 +91,12 @@ export default function Home() {
               Find the perfect time to train. All classes include warmup, technique work,
               pad work, and conditioning.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {classes.map((classItem, index) => (
-              <motion.div
+              <div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.2 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
                 className="bg-background border-2 border-border hover:border-primary p-6 space-y-4 transition-all"
               >
                 <h3 className="font-bebas text-3xl text-primary">{classItem.name}</h3>
@@ -166,7 +110,7 @@ export default function Home() {
                     <span>{classItem.days}</span>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
@@ -175,13 +119,7 @@ export default function Home() {
       {/* Call to Action Section */}
       <section className="py-24 bg-gradient-to-b from-zinc-950 via-primary/5 to-black">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto text-center space-y-8 bg-card border-2 border-primary p-12"
-          >
+          <div className="max-w-4xl mx-auto text-center space-y-8 bg-card border-2 border-primary p-12">
             <h2 className="font-bebas text-6xl md:text-7xl text-foreground">
               READY TO <span className="text-primary">BEGIN?</span>
             </h2>
@@ -199,7 +137,7 @@ export default function Home() {
                 CONTACT US
               </button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 

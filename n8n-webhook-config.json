@@ -1,0 +1,218 @@
+{
+  "webhookConfig": {
+    "name": "Bells Boxing Contact Form",
+    "description": "Webhook configuration for receiving contact form submissions from Bells Boxing website",
+    "method": "POST",
+    "contentType": "application/json",
+    "corsMode": "no-cors"
+  },
+  "payloadSchema": {
+    "type": "object",
+    "required": ["name", "email", "message", "timestamp"],
+    "properties": {
+      "name": {
+        "type": "string",
+        "description": "Full name of the person submitting the form",
+        "example": "John Doe",
+        "validation": "Required field, HTML5 text input"
+      },
+      "email": {
+        "type": "string",
+        "format": "email",
+        "description": "Email address of the person submitting the form",
+        "example": "john@example.com",
+        "validation": "Required field, HTML5 email input with validation"
+      },
+      "phone": {
+        "type": "string",
+        "description": "Phone number of the person (optional)",
+        "example": "(555) 123-4567",
+        "validation": "Optional field, HTML5 tel input"
+      },
+      "message": {
+        "type": "string",
+        "description": "Message content from the contact form",
+        "example": "I'm interested in joining your boxing classes...",
+        "validation": "Required field, textarea with minimum content expected"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time",
+        "description": "ISO 8601 timestamp of when the form was submitted",
+        "example": "2025-10-24T11:13:45.123Z"
+      }
+    }
+  },
+  "examplePayload": {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "phone": "0407581872",
+    "message": "I'm interested in joining your early morning boxing classes. I'm a complete beginner and would like to know more about the membership options.",
+    "timestamp": "2025-10-24T11:13:45.123Z"
+  },
+  "n8nWorkflowSetup": {
+    "step1_webhook": {
+      "node": "Webhook",
+      "config": {
+        "httpMethod": "POST",
+        "path": "contact-form",
+        "responseMode": "onReceived",
+        "responseCode": 200,
+        "responseData": "{\"success\": true}"
+      }
+    },
+    "step2_dataProcessing": {
+      "node": "Set",
+      "description": "Extract and format the contact form data",
+      "operations": [
+        {
+          "name": "contactName",
+          "value": "={{ $json.name }}"
+        },
+        {
+          "name": "contactEmail",
+          "value": "={{ $json.email }}"
+        },
+        {
+          "name": "contactPhone",
+          "value": "={{ $json.phone || 'Not provided' }}"
+        },
+        {
+          "name": "message",
+          "value": "={{ $json.message }}"
+        },
+        {
+          "name": "submittedAt",
+          "value": "={{ $json.timestamp }}"
+        },
+        {
+          "name": "formattedDate",
+          "value": "={{ DateTime.fromISO($json.timestamp).toFormat('dd/MM/yyyy HH:mm:ss') }}"
+        }
+      ]
+    },
+    "step3_emailNotification": {
+      "node": "Gmail / Send Email",
+      "description": "Send email notification to gym owner",
+      "config": {
+        "toEmail": "greg@bellsboxing.com",
+        "subject": "New Contact Form Submission - Bells Boxing",
+        "emailFormat": "html",
+        "emailBody": "<!DOCTYPE html>\n<html>\n<head>\n  <style>\n    body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }\n    .container { max-width: 600px; margin: 0 auto; padding: 20px; }\n    .header { background: #DC2626; color: white; padding: 20px; text-align: center; }\n    .content { background: #f4f4f4; padding: 20px; }\n    .field { margin-bottom: 15px; }\n    .label { font-weight: bold; color: #DC2626; }\n    .value { margin-top: 5px; }\n    .footer { text-align: center; padding: 20px; font-size: 12px; color: #666; }\n  </style>\n</head>\n<body>\n  <div class=\"container\">\n    <div class=\"header\">\n      <h1>BELLS BOXING</h1>\n      <p>New Contact Form Submission</p>\n    </div>\n    <div class=\"content\">\n      <div class=\"field\">\n        <div class=\"label\">Name:</div>\n        <div class=\"value\">={{ $json.contactName }}</div>\n      </div>\n      <div class=\"field\">\n        <div class=\"label\">Email:</div>\n        <div class=\"value\"><a href=\"mailto:={{ $json.contactEmail }}\">={{ $json.contactEmail }}</a></div>\n      </div>\n      <div class=\"field\">\n        <div class=\"label\">Phone:</div>\n        <div class=\"value\">={{ $json.contactPhone }}</div>\n      </div>\n      <div class=\"field\">\n        <div class=\"label\">Message:</div>\n        <div class=\"value\">={{ $json.message }}</div>\n      </div>\n      <div class=\"field\">\n        <div class=\"label\">Submitted:</div>\n        <div class=\"value\">={{ $json.formattedDate }}</div>\n      </div>\n    </div>\n    <div class=\"footer\">\n      <p>This email was automatically generated from your website contact form.</p>\n    </div>\n  </div>\n</body>\n</html>"
+      }
+    },
+    "step4_googleSheets": {
+      "node": "Google Sheets",
+      "description": "Log submission to Google Sheets for tracking",
+      "config": {
+        "operation": "append",
+        "sheetId": "YOUR_SHEET_ID",
+        "range": "A:F",
+        "values": [
+          "={{ $json.formattedDate }}",
+          "={{ $json.contactName }}",
+          "={{ $json.contactEmail }}",
+          "={{ $json.contactPhone }}",
+          "={{ $json.message }}",
+          "New"
+        ]
+      }
+    },
+    "step5_slackNotification": {
+      "node": "Slack",
+      "description": "Optional: Send notification to Slack channel",
+      "config": {
+        "operation": "sendMessage",
+        "channel": "#contact-forms",
+        "message": "🥊 *New Contact Form Submission*\n\n*Name:* {{ $json.contactName }}\n*Email:* {{ $json.contactEmail }}\n*Phone:* {{ $json.contactPhone }}\n*Message:* {{ $json.message }}\n\n_Submitted at {{ $json.formattedDate }}_"
+      }
+    }
+  },
+  "environmentVariables": {
+    "required": [
+      {
+        "name": "NEXT_PUBLIC_N8N_WEBHOOK_URL",
+        "description": "Production n8n webhook URL",
+        "example": "https://your-n8n-instance.com/webhook/contact-form",
+        "location": ".env.local",
+        "visibility": "Public (NEXT_PUBLIC_ prefix required for client-side access)"
+      }
+    ],
+    "optional": [
+      {
+        "name": "NEXT_PUBLIC_TEST_N8N_WEBHOOK_URL",
+        "description": "Testing/development webhook URL",
+        "example": "https://test.n8n.instance.com/webhook/contact-form-test",
+        "location": ".env.local"
+      }
+    ]
+  },
+  "testingInstructions": {
+    "step1": "Create a test n8n webhook workflow with the configuration above",
+    "step2": "Copy your webhook URL from n8n",
+    "step3": "Add NEXT_PUBLIC_N8N_WEBHOOK_URL to your .env.local file",
+    "step4": "Restart your Next.js development server",
+    "step5": "Submit a test form on http://localhost:3000/contact",
+    "step6": "Check n8n workflow execution to verify data received",
+    "step7": "Verify email received at greg@bellsboxing.com (or test email)"
+  },
+  "productionDeployment": {
+    "step1": "Deploy your n8n workflow to production",
+    "step2": "Get production webhook URL",
+    "step3": "Add NEXT_PUBLIC_N8N_WEBHOOK_URL to Vercel/hosting environment variables",
+    "step4": "Deploy website to production",
+    "step5": "Test production form submission",
+    "notes": [
+      "The form uses no-cors mode to handle CORS restrictions",
+      "Form assumes success after sending (can't read response due to no-cors)",
+      "Monitor n8n workflow executions to confirm submissions are received",
+      "All console.log statements help with debugging in development"
+    ]
+  },
+  "businessDetails": {
+    "gymName": "Bells Boxing",
+    "contactEmail": "greg@bellsboxing.com",
+    "phone": "0 407 581 872",
+    "address": "116 Fyans St, South Geelong VIC 3220",
+    "hours": "All Days: 5:00 AM - 9:00 PM",
+    "googleMapsUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3137.0118234701567!2d144.35568631270795!3d-38.16316475397257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6ad415f18edd7fa9%3A0xd5a10e8309b7dba3!2sBells%20Boxing!5e0!3m2!1sen!2sau!4v1761288802546!5m2!1sen!2sau"
+  },
+  "formFields": {
+    "name": {
+      "id": "name",
+      "type": "text",
+      "required": true,
+      "label": "Full Name",
+      "placeholder": "John Doe"
+    },
+    "email": {
+      "id": "email",
+      "type": "email",
+      "required": true,
+      "label": "Email Address",
+      "placeholder": "john@example.com"
+    },
+    "phone": {
+      "id": "phone",
+      "type": "tel",
+      "required": false,
+      "label": "Phone Number",
+      "placeholder": "(555) 123-4567"
+    },
+    "message": {
+      "id": "message",
+      "type": "textarea",
+      "required": true,
+      "label": "Message",
+      "placeholder": "Tell us about your fitness goals and what you're looking for...",
+      "rows": 6
+    }
+  },
+  "codeLocation": {
+    "contactForm": "/app/contact/page.tsx",
+    "formSubmitHandler": "Lines 18-96",
+    "formState": "Lines 8-13",
+    "formFields": "Lines 149-211",
+    "environmentVariables": "Line 27"
+  }
+}

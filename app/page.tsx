@@ -66,12 +66,12 @@ export default function Home() {
               </div>
 
               <div className="space-y-2">
-                <div className="text-5xl font-bebas text-primary">500+</div>
+                <div className="text-5xl font-bebas text-primary">50+</div>
                 <div className="text-muted-foreground">Active Members</div>
               </div>
 
               <div className="space-y-2">
-                <div className="text-5xl font-bebas text-primary">15</div>
+                <div className="text-5xl font-bebas text-primary">2</div>
                 <div className="text-muted-foreground">Expert Coaches</div>
               </div>
             </div>
